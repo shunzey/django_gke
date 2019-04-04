@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Result of your vote{% endblock %}
+
+{% block content %}
+<h1>{{ question.question_text }}</h1>
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes}} vote{{choice.votes|pluralize}}</li>
+{% endfor %}
+</ul>
+<p>Thank you for your vote!</p>
+<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+{% endblock %}

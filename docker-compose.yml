@@ -1,0 +1,49 @@
+version: '3.4'
+services:
+  py:
+    image: py:4
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: 'python3.6 manage.py runserver 0.0.0.0:8000'
+    ports:
+      - '8000:8000'
+    networks:
+      - app_net
+
+  pg11:
+    image: postgres:11
+    restart: always
+#   PostgreSQLの初期ユーザーを変更したい場合はここを有効化する
+#   environment:
+#     POSTGRES_USER: $PG_ADMIN_USER
+#     POSTGRES_PASSWORD: $PG_ADMIN_PW
+#     POSTGRES_DB: postgres
+    ports:
+      - '15555:5432'
+    networks:
+      app_net:
+        # データベースはIPを固定する
+        ipv4_address: 172.16.238.10
+        ipv6_address: 2001:3984:3989::10
+    volumes:
+      - pg_volume:/var/lib/postgresql/data
+#     - ./pginit/:/docker-entrypoint-initdb.d
+
+# ホスト上のディレクトリは docker volume inspect pg_dev を参照。
+volumes:
+  pg_volume:
+    driver: local
+    name: pg_volume
+
+networks:
+  app_net:
+    driver: bridge
+    # IP Address Management
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: 172.16.238.0/24
+      -
+        subnet: 2001:3984:3989::/64

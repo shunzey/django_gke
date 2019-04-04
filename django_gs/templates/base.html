@@ -1,0 +1,13 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="/static/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" >
+        {% block head_block %}{% endblock %}
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>
