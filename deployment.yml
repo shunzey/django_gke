@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dj
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pg11
+  template:
+    metadata:
+      labels:
+        app: pg11
+    spec:
+      containers:
+      - name: pg
+        image: postgres:11
+        env:
+          # PersitentVolumeのルートには lost+found ディレクトリが自動で作成されているので
+          # サブディレクトリをdata用に指定する
+          - name: PGDATA
+            value: /var/lib/postgresql/vol/data
+        ports:
+        - containerPort: 5432
+          name: pg-port
+        # PersitentVolumeをマウントする
+        volumeMounts:
+        - name: dj-volume
+          mountPath: /var/lib/postgresql/vol
+      volumes:
+      - name: dj-volume
+        persistentVolumeClaim:
+          claimName: dj-disk

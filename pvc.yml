@@ -1,0 +1,11 @@
+# 永続化ボリューム要求
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dj-disk
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
