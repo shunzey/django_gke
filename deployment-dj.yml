@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dj
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dj
+  template:
+    metadata:
+      labels:
+        app: dj
+    spec:
+      containers:
+      - name: py4
+        image: shunzey/py:5
+        env:
+          # データベースのホストDNSをPGのサービス名に
+          - name: DATABASE_HOST
+            value: pgsvc
+        command: ["python3.6"]
+        args: ["manage.py", "runserver", "0.0.0.0:8000"]
+        ports:
+        - containerPort: 8000
+          name: dj-port

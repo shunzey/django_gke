@@ -1,12 +1,14 @@
 version: '3.4'
 services:
   py:
-    image: shunzey/py:4
+    image: shunzey/py:5
     build:
       context: .
       dockerfile: Dockerfile
     depends_on:
       - pg11
+    environment:
+      - DATABASE_HOST=172.16.238.10
     command: 'python3.6 manage.py runserver 0.0.0.0:8000'
     ports:
       - '8000:8000'

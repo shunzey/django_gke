@@ -25,7 +25,7 @@ SECRET_KEY = '%bb)dc3i@6-45cd3tuui@id*b%t+&)+vdmqhf0lw5s5x8h8=l('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -84,7 +84,9 @@ DATABASES = {
         'NAME': 'Polls',
         'USER': 'user',
         'PASSWORD': 'password',
-        'HOST': '172.16.238.10',
+        # Kubernetes データベース用Serviceの.metadata.nameを指定する
+        #'HOST': '172.16.238.10', # <- docker-composeで動作
+        'HOST': os.environ['DATABASE_HOST'],
         #'HOST': 'localhost',
         'PORT': '5432'
     }
