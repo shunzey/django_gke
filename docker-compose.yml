@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   py:
-    image: py:4
+    image: shunzey/py:4
     build:
       context: .
       dockerfile: Dockerfile
