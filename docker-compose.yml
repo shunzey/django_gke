@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    depends_on:
+      - pg11
     command: 'python3.6 manage.py runserver 0.0.0.0:8000'
     ports:
       - '8000:8000'
